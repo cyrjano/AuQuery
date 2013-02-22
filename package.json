@@ -1,0 +1,25 @@
+{
+	"name":"aquery",
+	"description":"Selenium powered node.js JQuery-like interface for Test",
+	"tags": [
+		"web",
+		"automation",
+		"browser",
+		"selenium",
+		"webdriver",
+		"JQuery"
+	],
+	"version": "0.0.1",
+	"author": "Alejandro Perez Munoz <aperezmunoz@demandforce.com>",
+	"main": "./lib/main",
+	"directories":{
+		"lib": ".lib"
+	},
+	"dependencies":{
+		"wd":"~0.0.30",
+		"fibers":"1.0.x"
+	},
+	"devDependencies":{
+		"mocha":"1.8.x"
+	}
+}
