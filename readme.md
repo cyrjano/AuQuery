@@ -1,4 +1,6 @@
-﻿#auQuery#
+[![Build Status](https://travis-ci.org/cyrjano/AuQuery.png)](https://travis-ci.org/cyrjano/AuQuery)
+
+#auQuery#
 jQuery-like browser automation library.
 
 ##Why auQuery?##
