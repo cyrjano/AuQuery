@@ -28,9 +28,21 @@ var testPage1 = function(){
 		};
 		return prop2; 
 	};
+	
 	this.functionOne = function(){
 		calls.push( {method:'functionOne', args:[]});
 	};
+	
+	this.nestedItem = {
+		child:'leaf'
+	};
+	
+	this.resolveItem = {
+		child: function(name){
+			return 'resolved';
+		}
+	};
+	
 	this.name = 'testPage1'; 
 };
 testPage1.to = function(){
@@ -49,6 +61,32 @@ var browser = new Browser({});
 describe('browser', function(){
 	beforeEach(function(){
 		calls = [];
+	}),
+	describe('#on()', function(){
+		it('should set the context to nested item', function (done){
+			browser.drive(function($){
+				this.to(testPage1);
+				this.on('nestedItem', function(){
+					assert.equal(this.resolve('child'), 'leaf'); 
+				});
+			}, done);
+		}),
+		it('should work with regular items', function (done){
+			browser.drive(function($){
+				this.to(testPage1);
+				this.on(this.nestedItem, function(){
+					assert.equal(this.resolve('child'), 'leaf'); 
+				});
+			}, done);
+		}),
+		it('should work with classes with resolve method', function (done){
+			browser.drive(function($){
+				this.to(testPage1);
+				this.on(this.resolveItem, function(){
+					assert.equal(this.resolve('child'), 'resolved'); 
+				});
+			}, done);
+		})
 	}),
 	describe('#to()', function(){
 		it('should go to page', function( done){
@@ -106,5 +144,5 @@ describe('browser', function(){
 			}, done);
 		})
 	})
-})
+});
 
