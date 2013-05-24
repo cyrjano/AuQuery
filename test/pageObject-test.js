@@ -11,8 +11,8 @@ var testPage1 = function(){
 			calls.push( {method:'property1.click', args:[]});
 			return testPage2; 
 		},
-		type: function(){
-			calls.push( {method:'property1.type', args:[]});
+		type: function(message){
+			calls.push( {method:'property1.type', args:[message]});
 		}
 	};
 	
@@ -65,9 +65,21 @@ describe('browser', function(){
 				this.to(testPage1); 
 				this.functionOne();
 				assert.equal(calls[0].method,'to'); 
-				assert.equal(calls[0].args.length,0); 
+				assert.equal(calls[0].args.length, 0); 
 				assert.equal(calls[1].method,'functionOne'); 
-				assert.equal(calls[1].args.length,0); 
+				assert.equal(calls[1].args.length, 0); 
+			},done);
+		})
+	}),
+	describe('#type()', function(){
+		it('should type to the element', function(done){
+			browser.drive(function($){
+				this.to(testPage1); 
+				this.type({propertyOne:'message'});
+				assert.equal(calls[0].method, 'to'); 
+				assert.equal(calls[0].args.length, 0);
+				assert.equal(calls[1].method,'property1.type');
+				assert.equal(calls[1].args[0], 'message');
 			},done);
 		})
 	}),
