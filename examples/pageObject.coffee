@@ -4,9 +4,6 @@ Browser = lib.browser
 $ = lib.auQuery
 po = lib.pageObject
 
-webDriver = wd.remote()
-browser = new Browser(webDriver)
-
 class googleResults
 	links:->(link.text() for link in $('.r a'))
 
@@ -14,6 +11,10 @@ class google
 	searchButton:  po.button(selector:'button[name=btnG]', page:googleResults)
 	q: po.elements('input[name=q]')
 google.to = 'http://www.google.com'
+
+webDriver = wd.remote()
+browser = new Browser(webDriver)
+
 
 browser.drive(
 	($, browser)->
