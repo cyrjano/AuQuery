@@ -8,12 +8,12 @@ var webDriver = wd.remote();
 
 var browser = new Browser(webDriver); 
 
-browser.drive(function($){
-	this.init(); 
-	this.get('http://www.google.com'); 
+browser.drive(function($, browser){
+	browser.init(); 
+	browser.get('http://www.google.com'); 
 	$('input[name=q]').type('Hello World'); 
-	console.log( this.title() ); 
-	this.quit();
+	console.log( browser.title() ); 
+	browser.quit();
 }
 , function(err, res){
 	if(err){

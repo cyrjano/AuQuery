@@ -1,11 +1,10 @@
 lib = require 'auQuery' 
 wd = require 'wd' 
 Browser = lib.browser
-$ = lib.auQuery
 po = lib.pageObject
 
 class googleResults
-	links:->(link.text() for link in $('.r a'))
+	links: ->(link.text() for link in @$('.r a'))
 
 class google 
 	searchButton:  po.button(selector:'button[name=btnG]', page:googleResults)
@@ -14,7 +13,6 @@ google.to = 'http://www.google.com'
 
 webDriver = wd.remote()
 browser = new Browser(webDriver)
-
 
 browser.drive(
 	($, browser)->
