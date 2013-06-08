@@ -9,11 +9,14 @@ auQuery offer several advantages over other browser automation tools that works 
 1. __auQuery syntax is synchronous__. This is easier to model for procedural code like automation, plus Selenium is synchronous, and 
 cannot handle several request at the same time. auQuery also plays nice with existing asynchronous interfaces. 
 
-2. __auQuery syntax is similar to jQuery__. JQuery is a familiar web syntax, and that knowledges and even libraries can be reused 
-on auQuery
+2. __auQuery syntax is similar to jQuery__. JQuery is a familiar web syntax, and that knowledges and even libraries 
+can be reused on auQuery
 
 3. __auQuery wraps the wd interface__. Internally, auQuery uses ```wd``` to access the browsers, it also exposes all of ```wd```
-methods syncrhonously for easy consumption. 
+methods syncrhonously for easy consumption. On the drive method the second parameter is a browser method. 
+
+4. __auQuery allows page object__. Selenium Webdriver includes a way to develop based on page object. AuQuery supports
+a similar methodology to maintain large projects using coffee. 
 
 ###Example###
 Google search example: 
@@ -29,18 +32,17 @@ var webDriver = wd.remote();
 
 var browser = new Browser(webDriver); 
 
-browser.drive(function($){
-  this.init(); 
-  this.get('http://www.google.com'); 
-  $('input[name=q]').type('Hello World');
-  this.sleep(1000 /*ms*/); 
-  console.log( this.title() ); 
-  this.quit();
+browser.drive(function($, browser){
+  browser.init(); 
+	browser.get('http://www.google.com'); 
+	$('input[name=q]').type('Hello World'); 
+	console.log( browser.title() ); 
+	browser.quit();
 }
 , function(err, res){
-  if(err){
-    console.log(err); 
-  }
+	if(err){
+		console.log(err); 
+	}
 });
 ```
 
@@ -103,7 +105,46 @@ Selenium Related methods:
 * tail - aliases last
 * $ - aliases auQuery
 
+###Page Objects###
+Page objects allow you to better manage large projects. PageObjects work by modifying the prototype of the currently
+running object so that the methods become available. The current page object can be changed using the page() method and
+passing the constructor of the class. However a common thing to do is clicking and changing page PageObject.button allow
+you to define this process. Po.Elements allow you to bring elements jit for a selector. 
 
+Example on Coffee Script of Page Objects: 
+```coffeescript
+lib = require 'auQuery' 
+wd = require 'wd' 
+Browser = lib.browser
+po = lib.pageObject
+
+class googleResults
+  links: ->(link.text() for link in @$('.r a'))
+
+class google 
+	searchButton:  po.button(selector:'button[name=btnG]', page:googleResults)
+	q: po.elements('input[name=q]')
+google.to = 'http://www.google.com'
+
+webDriver = wd.remote()
+browser = new Browser(webDriver)
+
+browser.drive(
+	($, browser)->
+		browser.init()
+		@to google
+		@type q:'auQuery'
+		@wait 3000
+		@click 'searchButton'
+		@wait 1000
+		links = @links()
+		browser.quit()
+		links
+	(err, res)->
+		console.log(err);
+		console.log(res); 
+)
+```
 ###Limits###
 
 * This library is not feature-complete compared with Selenium Webdriver. 
