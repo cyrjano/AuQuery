@@ -150,3 +150,7 @@ browser.drive(
 * This library is not feature-complete compared with Selenium Webdriver. 
 * This library does not implement (or plan to implement) all of jQuery features. 
 * This library depends on fibers, and is not portable to run on the browser (node.js only) 
+
+###LICENSE###
+
+* MIT
