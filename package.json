@@ -1,6 +1,7 @@
 {
 	"name":"auquery",
 	"description":"Selenium-powered JQuery-like automation library",
+	"license":"MIT",
 	"tags": [
 		"web",
 		"automation",
