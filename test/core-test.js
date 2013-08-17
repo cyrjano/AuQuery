@@ -2,10 +2,14 @@ var assert = require('assert');
 var lib = require('../lib/main');
 var $ = lib.auQuery; 
 var a = $([0,1,2,3]);
+var singleItem = $(2);
 describe('auQuery', function(){
 	describe('#size()', function(){
 		it("should have size to array", function(){
 			assert.equal(4, a.size()); 
+		}),
+		it("should have size of 1", function(){
+			assert.equal(1, singleItem.size()); 
 		})
 	}),
 	describe('#get()', function(){
@@ -14,6 +18,9 @@ describe('auQuery', function(){
 		}),
 		it("should get item in  from the end", function(){
 			assert.equal(a.get(-1),3);
+		}),
+		it("should get single item at 0 position", function(){
+			assert.equal(singleItem.get(0), 2);
 		})
 	}),
 	describe('#eq()', function(){
