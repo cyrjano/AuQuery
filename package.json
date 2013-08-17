@@ -10,8 +10,8 @@
 		"webdriver",
 		"JQuery"
 	],
-	"version": "0.2.2",
-	"author": "Alejandro Perez Munoz <aperezmunoz@demandforce.com>",
+	"version": "0.2.3",
+	"author": "Alejandro Perez Munoz <cyrjano@hotmail.com>",
 	"main": "./lib/main",
 	"directories":{
 		"lib": ".lib"
